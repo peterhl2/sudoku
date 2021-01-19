@@ -10,6 +10,10 @@ class Box:
     def get(self, i, j):
         return self.grid[i][j]
 
+    def set(self, i, j, num):
+        self.grid[i][j] = num
+        return
+
     # returns whether the number doesn't exist in the Box
     def checkValidBox(self, num, i, j):
         box = self.grid[i // 3][j // 3]
@@ -30,8 +34,15 @@ class Board:
         ]
 
     # TODO: Write this function, takes user input and create a gameboard
-    def fillBoard(self, numbers):
-        numbers = [0] * 81 + numbers
+    def fillBoard(self, numbersList):
+        numbersList = numbersList.split(" ")
+        numbers = []
+        for i in range(81):
+            if i < len(numbersList):
+                numbers.append(int(numbersList[i]))
+            else:
+                numbers.append(0)
+        print(numbers)
         for i in range(9):
             for j in range(9):
                 self.set(i, j, numbers[i*9 + j])
@@ -71,7 +82,8 @@ class Board:
         boardY = j // 3
         boxX = i % 3
         boxY = j % 3
-        self.grid[boardX][boardY].get(boxX, boxY) = num
+        box = self.grid[boardX][boardY]
+        box.set(boxX, boxY, num)
         return
 
     def get(self, i, j):
@@ -116,7 +128,7 @@ def createBlankBoard():
 
 def createUserBoard():
     board = Board()
-    numbers = input("Enter a list of values")
+    numbers = input("Enter a list of values: ")
     board.fillBoard(numbers)
     return board
 
@@ -125,5 +137,5 @@ def createUserBoard():
 # solve(gameBoard)
 #
 # gameBoard.print()
-board = createBlankBoard()
+board = createUserBoard()
 board.print()
