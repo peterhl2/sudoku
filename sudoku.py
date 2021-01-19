@@ -75,6 +75,30 @@ class Board:
 
     # TODO: Write this function, solve
     def solve(self):
+        iterations = 0
+        loopUpdated = True
+        while (loopUpdated):
+            loopUpdated = False
+            # Scan Rows
+            for i in range(9):
+                for j in range(9):
+                    if self.get(i, j): #skip if already has value
+                        continue
+                    for val in range(9):
+                        break
+
+            # Scan Rows
+            for row in range(9):
+                for val in range(9):
+                break
+            # Scan Columns
+            for col in range(9):
+                break
+            # Scan Boxes
+            for box in range(9):
+                break
+            print("Solve Iteration: {}".format(iterations))
+            self.print()
         return
 
     def set(self, i, j, num):
@@ -115,6 +139,9 @@ class Board:
         ]
         return col
 
+    def getBox(self, i, j):
+        return self.grid[i // 3][j // 3]
+
     # returns whether the number doesn't exist in the Row
     def checkValidRow(num, i):
         return not num in getRow(i)
@@ -138,4 +165,4 @@ def createUserBoard():
 #
 # gameBoard.print()
 board = createUserBoard()
-board.print()
+board.solve()
