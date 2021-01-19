@@ -31,6 +31,10 @@ class Board:
 
     # TODO: Write this function, takes user input and create a gameboard
     def fillBoard(self, numbers):
+        numbers = [0] * 81 + numbers
+        for i in range(9):
+            for j in range(9):
+                self.set(i, j, numbers[i*9 + j])
         return
 
     # TODO: Write this function, prints the entire game board
@@ -60,6 +64,14 @@ class Board:
 
     # TODO: Write this function, solve
     def solve(self):
+        return
+
+    def set(self, i, j, num):
+        boardX = i // 3
+        boardY = j // 3
+        boxX = i % 3
+        boxY = j % 3
+        self.grid[boardX][boardY].get(boxX, boxY) = num
         return
 
     def get(self, i, j):
