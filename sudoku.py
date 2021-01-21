@@ -111,8 +111,9 @@ class Board:
         iterations = 0
         loopUpdated = True
         while (loopUpdated):
+            loopUpdated = False
             for num in range(1, 10):
-                loopUpdated = self.loopFillNum(num)
+                loopUpdated = self.loopFillNum(num) or loopUpdated
             iterations += 1
             print("Solve Iteration: {}".format(iterations))
             self.print()
