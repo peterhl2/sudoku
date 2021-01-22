@@ -1,4 +1,4 @@
-from puzzles import easySudoku1
+from puzzles import easySudoku1, mediumSudoku1
 
 # 3x3 grid of unique numbers from 1-9
 class Box:
@@ -127,7 +127,7 @@ class Board:
         for i in range(9):
             for j in range(9):
                 cell = self.get(i, j)
-                if cell:
+                if cell > 0:
                     couldBeNum[i][j] = 0
                 if cell == num:
                     for k in range(9):
@@ -137,7 +137,7 @@ class Board:
                     topLeftJ = j // 3
                     for bi in range(3):
                         for bj in range(3):
-                            couldBeNum[topLeftI+bi][topLeftJ+bj] = 0
+                            couldBeNum[topLeftI*3+bi][topLeftJ*3+bj] = 0
         # update rows
         for row in range(9):
             if self.numInRow(row, num):
@@ -272,5 +272,5 @@ def loadUserBoard(input):
     board.fillBoard(input)
     return board
 
-board = loadUserBoard(easySudoku1)
+board = loadUserBoard(mediumSudoku1)
 board.solve()
