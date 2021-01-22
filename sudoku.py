@@ -134,7 +134,7 @@ class Board:
                         couldBeNum[i][k] = 0
                         couldBeNum[k][j] = 0
                     top_left_idx_i = (i // 3) * 3
-                    top_left_idx_j = (j % 3) * 3
+                    top_left_idx_j = (j // 3) * 3
                     for bi in range(3):
                         for bj in range(3):
                             couldBeNum[top_left_idx_i+bi][top_left_idx_j+bj] = 0
@@ -171,21 +171,21 @@ class Board:
                 updated = True
 
         # update boxes
-        for box in range(9):
-            box_sum = 0
-            box_idx = -1
-            top_left_idx_i = (box // 3) * 3
-            top_left_idx_j = (box % 3) * 3
-            for i in range(3):
-                for j in range(3):
-                    if couldBeNum[top_left_idx_i+i][top_left_idx_j+j] and \
-                       self.rowIsMissingNum(top_left_idx_i+i, num) and \
-                       self.colIsMissingNum(top_left_idx_j, num):
-                        box_sum += 1
-                        box_idx = (top_left_idx_i+i, top_left_idx_j+j)
-            if box_sum == 1:
-                self.set(box_idx[0], box_idx[1], num)
-                updated = True
+        # for box in range(9):
+        #     box_sum = 0
+        #     box_idx = -1
+        #     top_left_idx_i = (box // 3) * 3
+        #     top_left_idx_j = (box % 3) * 3
+        #     for i in range(3):
+        #         for j in range(3):
+        #             if couldBeNum[top_left_idx_i+i][top_left_idx_j+j] and \
+        #                self.rowIsMissingNum(top_left_idx_i+i, num) and \
+        #                self.colIsMissingNum(top_left_idx_j+j, num):
+        #                 box_sum += 1
+        #                 box_idx = (top_left_idx_i+i, top_left_idx_j+j)
+        #     if box_sum == 1:
+        #         self.set(box_idx[0], box_idx[1], num)
+        #         updated = True
 
         return updated
 
@@ -274,5 +274,5 @@ def loadUserBoard(input):
     board.fillBoard(input)
     return board
 
-board = loadUserBoard(expertSudoku1)
+board = loadUserBoard(hardSudoku1)
 board.solve()
