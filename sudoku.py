@@ -171,21 +171,23 @@ class Board:
                 updated = True
 
         # update boxes
-        # for box in range(9):
-        #     box_sum = 0
-        #     box_idx = -1
-        #     top_left_idx_i = (box // 3) * 3
-        #     top_left_idx_j = (box % 3) * 3
-        #     for i in range(3):
-        #         for j in range(3):
-        #             if couldBeNum[top_left_idx_i+i][top_left_idx_j+j] and \
-        #                self.rowIsMissingNum(top_left_idx_i+i, num) and \
-        #                self.colIsMissingNum(top_left_idx_j+j, num):
-        #                 box_sum += 1
-        #                 box_idx = (top_left_idx_i+i, top_left_idx_j+j)
-        #     if box_sum == 1:
-        #         self.set(box_idx[0], box_idx[1], num)
-        #         updated = True
+        for box in range(9):
+            box_sum = 0
+            box_idx = -1
+            top_left_idx_i = (box // 3) * 3
+            top_left_idx_j = (box % 3) * 3
+            if self.numInBox(top_left_idx_i, top_left_idx_j, num):
+                continue
+            for i in range(3):
+                for j in range(3):
+                    if couldBeNum[top_left_idx_i+i][top_left_idx_j+j] and \
+                       self.rowIsMissingNum(top_left_idx_i+i, num) and \
+                       self.colIsMissingNum(top_left_idx_j+j, num):
+                        box_sum += 1
+                        box_idx = (top_left_idx_i+i, top_left_idx_j+j)
+            if box_sum == 1:
+                self.set(box_idx[0], box_idx[1], num)
+                updated = True
 
         return updated
 
@@ -233,7 +235,8 @@ class Board:
         return num in self.getCol(j)
 
     def numInBox(self, i, j, num):
-        self.getBox(i, j)
+        box = self.getBox(i, j)
+        return not box.isMissingVal(num)
 
     def getMissingValsRow(self, i):
         missingVals = {1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -274,5 +277,5 @@ def loadUserBoard(input):
     board.fillBoard(input)
     return board
 
-board = loadUserBoard(hardSudoku1)
+board = loadUserBoard(expertSudoku1)
 board.solve()
