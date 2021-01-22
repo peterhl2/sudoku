@@ -1,4 +1,4 @@
-from puzzles import easySudoku1, mediumSudoku1
+from puzzles import easySudoku1, mediumSudoku1, hardSudoku1, expertSudoku1
 
 # 3x3 grid of unique numbers from 1-9
 class Box:
@@ -133,11 +133,11 @@ class Board:
                     for k in range(9):
                         couldBeNum[i][k] = 0
                         couldBeNum[k][j] = 0
-                    topLeftI = i // 3
-                    topLeftJ = j // 3
+                    top_left_idx_i = (i // 3) * 3
+                    top_left_idx_j = (j % 3) * 3
                     for bi in range(3):
                         for bj in range(3):
-                            couldBeNum[topLeftI*3+bi][topLeftJ*3+bj] = 0
+                            couldBeNum[top_left_idx_i+bi][top_left_idx_j+bj] = 0
         # update rows
         for row in range(9):
             if self.numInRow(row, num):
@@ -171,19 +171,21 @@ class Board:
                 updated = True
 
         # update boxes
-        # for box in range(9):
-        #     box_sum = 0
-        #     box_idx = -1
-        #     top_left_idx_i = (box // 9) * 3
-        #     top_left_idx_j = (box % 3) * 3
-        #     for i in range(3):
-        #         for j in range(3):
-        #             if couldBeNum[top_left_idx_i+i][top_left_idx_j+j]:
-        #                 box_sum += 1
-        #                 box_idx = (top_left_idx_i+i, top_left_idx_j+j)
-        #     if box_sum == 1:
-        #         self.set(box_idx[0], box_idx[1],num)
-        #         updated = True
+        for box in range(9):
+            box_sum = 0
+            box_idx = -1
+            top_left_idx_i = (box // 3) * 3
+            top_left_idx_j = (box % 3) * 3
+            for i in range(3):
+                for j in range(3):
+                    if couldBeNum[top_left_idx_i+i][top_left_idx_j+j] and \
+                       self.rowIsMissingNum(top_left_idx_i+i, num) and \
+                       self.colIsMissingNum(top_left_idx_j, num):
+                        box_sum += 1
+                        box_idx = (top_left_idx_i+i, top_left_idx_j+j)
+            if box_sum == 1:
+                self.set(box_idx[0], box_idx[1], num)
+                updated = True
 
         return updated
 
@@ -272,5 +274,5 @@ def loadUserBoard(input):
     board.fillBoard(input)
     return board
 
-board = loadUserBoard(mediumSudoku1)
+board = loadUserBoard(expertSudoku1)
 board.solve()
