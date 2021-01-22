@@ -277,5 +277,6 @@ def loadUserBoard(input):
     board.fillBoard(input)
     return board
 
+# easySudoku1, mediumSudoku1, hardSudoku1, expertSudoku1
 board = loadUserBoard(expertSudoku1)
 board.solve()
