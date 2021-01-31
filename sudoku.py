@@ -54,6 +54,9 @@ class Board:
             [Box(), Box(), Box()],
             [Box(), Box(), Box()]
         ]
+        self.valid = []
+        for i in range (1, 10):
+            self.valid.append([[1]*9 for _ in range(9)])
 
     # Type input like: 1 3 4 7 9 8
     # for 81 numbers
@@ -104,11 +107,10 @@ class Board:
         val = self.grid[boardX][boardY].get(boxX, boxY)
         return val if val else " "
 
-    # TODO: Write this function, solve
-    def solve(self):
-        print("Given Game Board")
-        self.print()
-        iterations = 0
+    def solve(self, iterations=0):
+        if iterations == 0:
+            print("Given Game Board")
+            self.print()
         loopUpdated = True
         while (loopUpdated):
             loopUpdated = False
@@ -262,6 +264,51 @@ class Board:
 
     def boxIsMissingNum(self, i, j, num):
         return num in self.getBox(i, j).getMissingVals()
+
+    def numIsInvalidInCell(self, i, j, num):
+        return numInRow(i, num) or numInCol(j, num) or numInBox(i, j, num)
+
+    def numMultipleInRow(self, i, num):
+        row = self.getRow(i)
+        count = 0
+        for k in range(0, 9):
+            if row.get(k) == num:
+                count += 1
+        return count > 1
+
+    def numMultipleInCol(self, j, num):
+        col = self.getCol(j)
+        count = 0
+        for k in range(0, 9):
+            if col.get(k) == num:
+                count += 1
+        return count > 1
+
+    def numMultipleInBox(self, i, j, num):
+        box = self.getBox(i, j)
+        count = 0
+        for ki in range(0, 3):
+            for kj in range(0, 3):
+                if box.get(i % 3, j % 3)
+                    count += 1
+        return count > 1
+
+    def isSolved(self):
+        for i in range(0, 9):
+            for j in range(0, 9):
+                if self.get(i, j) == 0:
+                    return False
+        return True
+
+    def hasError(self):
+        for i in range(0, 9):
+            for j in range(0, 9):
+                num = self.get(i, j)
+                if numMultipleInRow(i, num) ||
+                   numMultipleInCol(j, num) ||
+                   numMultipleInBox(i, j, num):
+                   return True
+        return False
 
 def createBlankBoard():
     return Board()
